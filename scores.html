@@ -201,7 +201,10 @@
         const players = parseCSV(rosterCsvText).filter(p => p['playing?']?.toLowerCase() === 'yes');
 
         const today = getTodayString();
-        const games = allGames.filter(g => g.Date?.trim() === today);
+const games = allGames.filter(g => {
+  const cell = (g.Date || "").trim();
+  return cell.startsWith(today); // match 2/24 against 2/24/2026
+});
         if (games.length === 0) {
           loading.textContent = "No games scheduled today.";
           return;
