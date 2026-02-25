@@ -157,7 +157,7 @@
       });
     }
 
-    async function fetchKarma(userId) {
+    async function fetchKarma(console.log("Worker returned:", data);) {
       if (karmaCache.has(userId)) return karmaCache.get(userId);
       try {
         const res = await fetch(`${WORKER_URL}?userId=${encodeURIComponent(userId)}`);
