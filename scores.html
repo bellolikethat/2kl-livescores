@@ -269,6 +269,10 @@
 
         const today = getTodayString();
         const games = parseCSV(scheduleRes.data).filter(g => g.Date?.trim() === today);
+        if (games.length === 0) {
+  loading.textContent = "No games scheduled today.";
+  return;
+}
         const players = parseCSV(rosterRes.data).filter(p => p['playing?']?.toLowerCase() === 'yes');
 
         let loaded = 0;
