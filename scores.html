@@ -162,7 +162,12 @@
       try {
         const res = await fetch(`${WORKER_URL}?userId=${encodeURIComponent(userId)}`);
         const data = await res.json();
-        const val = parseFloat(data?.stats?.karmaDelta || 0);
+        const val = parseFloat(
+  data?.stats?.karmaDelta ??
+  data?.karmaDelta ??
+  data?.karma ??
+  0
+);
         karmaCache.set(userId, val);
         return val;
       } catch {
