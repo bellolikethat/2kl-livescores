@@ -8,7 +8,6 @@
   <title>2KL Live Scores</title>
 
   <!-- Axios for making HTTP requests -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <style>
     :root {
@@ -262,10 +261,13 @@
       const container = document.getElementById('games-container');
 
       try {
-        const [scheduleRes, rosterRes] = await Promise.all([
-          axios.get(scheduleCsvUrl),
-          axios.get(rosterCsvUrl)
-        ]);
+        const [scheduleText, rosterText] = await Promise.all([
+  fetch(scheduleCsvUrl).then(r => r.text()),
+  fetch(rosterCsvUrl).then(r => r.text())
+]);
+
+const scheduleRes = { data: scheduleText };
+const rosterRes = { data: rosterText };
 
         const today = getTodayString();
         const games = parseCSV(scheduleRes.data).filter(g => g.Date?.trim() === today);
