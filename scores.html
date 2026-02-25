@@ -170,8 +170,10 @@
 );
         karmaCache.set(userId, val);
         return val;
-      } catch {
-        return 0;
+      } catch (err) {
+  console.error("Worker fetch failed:", err);
+  return 0;
+}
       }
     }
 
