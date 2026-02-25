@@ -191,7 +191,7 @@
     async function processTeam(players, updateProgress) {
       let teamTotal = 0;
       const rows = await limitedMap(players, 10, async p => {
-        const userId = p['User ID']?.trim();
+        const userId = p['User ID']?.replace(/\r/g, '').trim();
         const userAt = p['User @']?.trim() || 'Unknown';
         const role = (p['role'] || '').toLowerCase();
         const deduction = parseFloat(p['deductions'] || 0);
