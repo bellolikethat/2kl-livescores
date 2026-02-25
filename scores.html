@@ -261,10 +261,18 @@
       const container = document.getElementById('games-container');
 
       try {
-        const [scheduleText, rosterText] = await Promise.all([
-  fetch(scheduleCsvUrl).then(r => r.text()),
-  fetch(rosterCsvUrl).then(r => r.text())
+       const [scheduleRes, rosterRes] = await Promise.all([
+  fetch(`${WORKER_URL}?sheet=schedule`).then(r => r.json()),
+  fetch(`${WORKER_URL}?sheet=roster`).then(r => r.json())
 ]);
+
+// Access CSV text via scheduleRes.data and rosterRes.data
+const scheduleCsvText = scheduleRes.data;
+const rosterCsvText = rosterRes.data;
+
+// Then parse CSV normally
+const allGames = parseCSV(scheduleCsvText);
+const players = parseCSV(rosterCsvText).filter(p => p['playing?']?.toLowerCase() === 'yes');
 
 const scheduleRes = { data: scheduleText };
 const rosterRes = { data: rosterText };
